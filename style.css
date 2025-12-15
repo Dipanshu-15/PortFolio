@@ -23,6 +23,8 @@ h1 {
 img {
   border-radius: 50%;
   width: 150px;
+  height: 150px;
+  object-fit: cover;
   border: 5px solid white; 
 }
 
@@ -42,4 +44,44 @@ a:hover {
 h2 {
     color: rgba(44, 62, 80, 0.8);
     border-bottom: 2px solid #e056fd;
+}
+
+/* Target the List Container */
+.Hobbies {
+  display: flex; /* The Magic Switch: Turns vertical stack into a row */
+  gap: 15px;     /* Adds space between the items */
+  padding: 0;    /* Removes default padding */
+  list-style-type: none; /* Removes the ugly bullet points */
+  justify-content: center; /* Centers the whole row in the middle of the card */
+}
+
+/* Target the List Items */
+.Hobbies li {
+  background-color: #e056fd; /* Purple background pill */
+  color: white;              /* White text */
+  padding: 8px 15px;         /* Makes the pill bigger */
+  border-radius: 20px;       /* Rounds the corners fully */
+  font-size: 14px;           /* Slightly smaller text */
+}
+
+/* SOCIAL LINKS FOOTER */
+.socials {
+  display: flex;          /* Aligns them in a row */
+  justify-content: center; /* Centers them */
+  gap: 30px;              /* Adds distinct space between the links */
+  list-style-type: none;  /* Kills the bullet points */
+  padding: 0;
+}
+
+.socials a {
+  font-size: 18px;
+  color: #333;            /* Dark grey text */
+  font-weight: bold;
+  border-bottom: 2px solid #e056fd; /* Cute underline */
+  padding-bottom: 3px;
+}
+
+.socials a:hover {
+  color: #e056fd;         /* Purple text on hover */
+  border-bottom: 2px solid transparent; /* Line disappears on hover for effect */
 }
