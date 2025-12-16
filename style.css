@@ -85,3 +85,36 @@ h2 {
   color: #e056fd;         /* Purple text on hover */
   border-bottom: 2px solid transparent; /* Line disappears on hover for effect */
 }
+
+.dark-theme{
+  background-color: #2d3436;
+  color: #dfe6e9;
+}
+
+#toggle-btn{
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* Force headers to be white when inside dark mode */
+.dark-theme h1, 
+.dark-theme h2, 
+.dark-theme h3,
+.dark-theme p {
+  color: #dfe6e9; /* Light Grey */
+}
+
+/* Force links to be bright when inside dark mode */
+.dark-theme a {
+  color: #e056fd; /* Bright Purple/Pink so they pop */
+}
+
+/* Fix the horizontal lines (hr) to be visible */
+.dark-theme hr {
+  border-color: #636e72; /* Lighter grey line */
+}
