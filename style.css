@@ -118,3 +118,23 @@ h2 {
 .dark-theme hr {
   border-color: #636e72; /* Lighter grey line */
 }
+
+/* --- RESPONSIVE DESIGN (MOBILE) --- */
+/* This rule only activates if the screen is 500px wide or smaller */
+@media (max-width: 500px) {
+  
+  .card {
+    width: 90%;       /* Instead of fixed pixels, take up 90% of the screen width */
+    margin: 20px auto; /* Slightly less margin from the top */
+    padding: 20px;    /* Slightly less padding inside */
+  }
+
+  h1 {
+    font-size: 22px;  /* Shrink the main title so it fits */
+  }
+
+  .hobbies {
+    flex-wrap: wrap;  /* Allow hobbies to drop to a second line if they run out of space */
+  }
+  
+}
