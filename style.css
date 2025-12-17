@@ -119,6 +119,53 @@ h2 {
   border-color: #636e72; /* Lighter grey line */
 }
 
+/* --- PROJECTS SECTION --- */
+.project-grid {
+  display: grid;
+  /* THE MAGIC LINE: Creates columns that automatically fit the screen */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+  gap: 20px; /* Space between cards */
+  margin-bottom: 20px;
+}
+
+.project-card {
+  background-color: #f1f2f6; /* Light grey card */
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #dfe6e9; /* Subtle border */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+}
+
+/* Fix Project Card Text for Dark Mode */
+.dark-theme .project-card {
+  background-color: #636e72; /* Darker grey for dark mode */
+  border-color: #b2bec3;
+}
+
+/* Make the whole card float up when you hover over it */
+.project-card:hover {
+  transform: translateY(-5px); /* Moves up 5 pixels */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Adds a soft shadow */
+}
+
+/* Style the "View Code" link to look like a button */
+.project-card a {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  background-color: #e056fd; /* Same purple as your theme */
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.project-card a:hover {
+  background-color: #be2edd; /* Darker purple on hover */
+}
+
 /* --- RESPONSIVE DESIGN (MOBILE) --- */
 /* This rule only activates if the screen is 500px wide or smaller */
 @media (max-width: 500px) {
