@@ -1,187 +1,335 @@
-/* google "color picker to find your color */
+/* --- 1. GLOBAL RESET & FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@500&display=swap');
 
-body {
-    background-color: #dcdde1;
-    font-family: Arial, sans-serif;
-    color: #333;
-}
-
-.card{
-    background-color: white; 
-    width: 400px;           
-    margin: 50px auto;      
-    padding: 20px;           
-    border-radius: 10px;     
-    text-align: center;     
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Adds a subtle 3D shadow */
-}
-
-h1 {
-    color: #2c3e50;
-}
-
-img {
-  border-radius: 50%;
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border: 5px solid white; 
-}
-
-/* normally the link's look */
-a {
-    text-decoration: none;
-    color: #e056fd;
-    font-weight: bold;
-}
-
-/* while hovering over link */
-a:hover {
-    color: #686de0;
-    text-decoration: underline;
-}
-
-h2 {
-    color: rgba(44, 62, 80, 0.8);
-    border-bottom: 2px solid #e056fd;
-}
-
-/* Target the List Container */
-.Hobbies {
-  display: flex; /* The Magic Switch: Turns vertical stack into a row */
-  gap: 15px;     /* Adds space between the items */
-  padding: 0;    /* Removes default padding */
-  list-style-type: none; /* Removes the ugly bullet points */
-  justify-content: center; /* Centers the whole row in the middle of the card */
-}
-
-/* Target the List Items */
-.Hobbies li {
-  background-color: #e056fd; /* Purple background pill */
-  color: white;              /* White text */
-  padding: 8px 15px;         /* Makes the pill bigger */
-  border-radius: 20px;       /* Rounds the corners fully */
-  font-size: 14px;           /* Slightly smaller text */
-}
-
-/* SOCIAL LINKS FOOTER */
-.socials {
-  display: flex;          /* Aligns them in a row */
-  justify-content: center; /* Centers them */
-  gap: 30px;              /* Adds distinct space between the links */
-  list-style-type: none;  /* Kills the bullet points */
+* {
+  box-sizing: border-box;
+  margin: 0;
   padding: 0;
 }
 
-.socials a {
-  font-size: 18px;
-  color: #333;            /* Dark grey text */
-  font-weight: bold;
-  border-bottom: 2px solid #e056fd; /* Cute underline */
-  padding-bottom: 3px;
+body {
+  background-color: #f8fafc; /* Clean Off-White Background */
+  color: #475569;            /* Professional Slate Grey Text */
+  font-family: 'Inter', sans-serif; /* Formal & Friendly */
+  line-height: 1.7;
 }
 
-.socials a:hover {
-  color: #e056fd;         /* Purple text on hover */
-  border-bottom: 2px solid transparent; /* Line disappears on hover for effect */
+/* --- 2. TYPOGRAPHY --- */
+h1, h2, h3, h4 {
+  color: #0f172a; /* Deep Charcoal (Almost Black) for headers */
 }
 
-.dark-theme{
-  background-color: #2d3436;
-  color: #dfe6e9;
+h1 {
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: -1.5px; /* Tight, modern tracking */
+  margin-bottom: 10px;
 }
 
-#toggle-btn{
-  background-color: #333;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2563eb; /* Tech Blue Accent */
   margin-bottom: 20px;
+  font-family: 'Fira Code', monospace; /* "Engineer" Touch */
 }
 
-/* Force headers to be white when inside dark mode */
-.dark-theme h1, 
-.dark-theme h2, 
-.dark-theme h3,
-.dark-theme p {
-  color: #dfe6e9; /* Light Grey */
+.tagline {
+  max-width: 320px;
+  margin-bottom: 40px;
+  font-size: 16px;
 }
 
-/* Force links to be bright when inside dark mode */
-.dark-theme a {
-  color: #e056fd; /* Bright Purple/Pink so they pop */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
 }
 
-/* Fix the horizontal lines (hr) to be visible */
-.dark-theme hr {
-  border-color: #636e72; /* Lighter grey line */
+/* --- 3. THE SPLIT LAYOUT (The Structure) --- */
+.screen-split {
+  max-width: 1100px; /* Slightly tighter for reading focus */
+  margin: 0 auto;
+  padding: 0 24px;
+  min-height: 100vh;
 }
 
-/* --- PROJECTS SECTION --- */
-.project-grid {
-  display: grid;
-  /* THE MAGIC LINE: Creates columns that automatically fit the screen */
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-  gap: 20px; /* Space between cards */
+@media (min-width: 1024px) {
+  .screen-split {
+    display: grid;
+    grid-template-columns: 40% 60%; /* 40% Sidebar, 60% Content */
+    gap: 60px;
+  }
+
+  .left-side {
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    padding: 90px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .right-side {
+    padding: 90px 0;
+  }
+}
+
+/* --- 4. NAVIGATION (Sidebar) --- */
+.nav-links a {
+  display: block;
+  padding: 12px 0;
+  color: #94a3b8; /* Muted Grey */
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a:hover {
+  color: #0f172a; /* Dark on hover */
+  padding-left: 10px;
+}
+
+/* The "Line" indicator on hover */
+.nav-links a::before {
+  content: '';
+  display: inline-block;
+  width: 0px;
+  height: 1px;
+  background: #0f172a;
+  margin-right: 0px;
+  transition: width 0.3s;
+}
+.nav-links a:hover::before {
+  width: 30px; /* Expands a line when you hover */
+  margin-right: 15px;
+}
+
+/* --- 5. RIGHT SIDE CONTENT --- */
+section {
+  margin-bottom: 100px;
+}
+
+/* Show the section headers again */
+section h3 {
+  display: block;          /* Un-hide them */
+  font-family: 'Fira Code', monospace;
+  font-size: 16px;         /* Readable size */
+  color: #2563eb;          /* Tech Blue */
   margin-bottom: 20px;
+  font-weight: normal;     /* Not too heavy */
 }
 
+p {
+  margin-bottom: 15px;
+}
+
+/* --- 6. PROJECT CARDS (Minimalist) --- */
 .project-card {
-  background-color: #f1f2f6; /* Light grey card */
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #dfe6e9; /* Subtle border */
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+  margin-bottom: 25px;
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid transparent; /* Invisible border initially */
+  transition: all 0.3s;
 }
 
-/* Fix Project Card Text for Dark Mode */
-.dark-theme .project-card {
-  background-color: #636e72; /* Darker grey for dark mode */
-  border-color: #b2bec3;
-}
-
-/* Make the whole card float up when you hover over it */
 .project-card:hover {
-  transform: translateY(-5px); /* Moves up 5 pixels */
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Adds a soft shadow */
+  background-color: #ffffff; /* Pure white card on hover */
+  border-color: #e2e8f0;     /* Subtle grey border appears */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Soft shadow */
+  transform: translateY(-2px);
 }
 
-/* Style the "View Code" link to look like a button */
+.project-card h4 {
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* The Launch Button looks like a "Badge" now */
+/* Make the link look like a pill button */
 .project-card a {
   display: inline-block;
-  margin-top: 10px;
-  text-decoration: none;
-  background-color: #e056fd; /* Same purple as your theme */
-  color: white;
-  padding: 8px 15px;
+  margin-top: 20px;
+  padding: 10px 20px;       /* Bigger touch target */
+  background-color: #eff6ff; /* Light blue background */
+  color: #2563eb;           /* Blue text */
+  border: 1px solid #2563eb;
   border-radius: 5px;
-  font-weight: bold;
-  font-size: 14px;
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;          /* Larger font */
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
 }
 
 .project-card a:hover {
-  background-color: #be2edd; /* Darker purple on hover */
+  background-color: #2563eb; /* Fill with blue on hover */
+  color: white;              /* White text on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
 }
 
-/* --- RESPONSIVE DESIGN (MOBILE) --- */
-/* This rule only activates if the screen is 500px wide or smaller */
-@media (max-width: 500px) {
-  
-  .card {
-    width: 90%;       /* Instead of fixed pixels, take up 90% of the screen width */
-    margin: 20px auto; /* Slightly less margin from the top */
-    padding: 20px;    /* Slightly less padding inside */
-  }
-
-  h1 {
-    font-size: 22px;  /* Shrink the main title so it fits */
-  }
-
-  .hobbies {
-    flex-wrap: wrap;  /* Allow hobbies to drop to a second line if they run out of space */
-  }
-  
+/* --- 7. HOBBY PILLS --- */
+.hobby-pills span {
+  display: inline-block;
+  background-color: #eff6ff;
+  color: #1e293b;            /* Darker text for readability */
+  padding: 10px 20px;        /* LARGER padding */
+  border-radius: 50px;
+  margin-right: 12px;
+  margin-bottom: 12px;       /* Spacing if they wrap */
+  font-size: 14px;           /* Bigger text */
+  font-family: 'Fira Code', monospace;
+  border: 1px solid #dbeafe;
+  transition: transform 0.2s;
 }
+
+.hobby-pills span:hover {
+  transform: translateY(-2px); /* Little hop on hover */
+  border-color: #2563eb;
+}
+
+/* --- 8. FOOTER & ICONS --- */
+.social-links {
+  font-size: 24px;
+}
+.social-btn {
+  margin-right: 20px;
+  color: #64748b;
+}
+.social-btn:hover {
+  color: #0f172a;
+}
+
+/* --- 9. CONTACT SECTION --- */
+.contact-section {
+  text-align: center; /* Center everything for impact */
+  padding: 60px 0;
+  margin-bottom: 50px;
+}
+
+.section-label {
+  font-family: 'Fira Code', monospace;
+  color: #2563eb; /* Tech Blue */
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.contact-title {
+  font-size: 40px;
+  color: #0f172a;
+  margin-bottom: 20px;
+}
+
+.contact-text {
+  max-width: 500px; /* Keep text readable, don't let it stretch too wide */
+  margin: 0 auto 40px auto; /* Center the text block */
+  color: #64748b;
+}
+
+/* --- THE BIG BUTTON --- */
+.email-btn {
+  display: inline-block;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  background-color: transparent;
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+.email-btn:hover {
+  background-color: rgba(37, 99, 235, 0.1); /* Light blue tint on hover */
+  transform: translateY(-3px); /* Lift effect */
+}
+
+.scrolling-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #1e293b;
+  font-family: 'Fira Code', monospace;
+  margin-top: 50px;
+}
+
+/* --- PAGE FOOTER --- */
+.page-footer {
+  text-align: center;
+  padding: 40px 0;
+  width: 100%;
+  background-color: #f8fafc;
+  color: #1e293b; /* CHANGED: Much darker grey (almost black) */
+  font-family: 'Fira Code', monospace;
+  font-size: 14px; /* CHANGED: Slightly bigger for readability */
+  margin-top: 50px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* --- CENTERED SOCIAL ICONS (For Contact Section) --- */
+.social-links-center {
+  margin-top: 40px; /* Space between button and icons */
+  font-size: 28px;
+}
+
+.social-links-center a {
+  color: #64748b; /* Muted grey initially */
+  margin: 0 15px; /* Space between icons */
+  transition: all 0.3s ease;
+}
+
+.social-links-center a:hover {
+  color: #2563eb; /* Tech Blue on hover */
+  transform: translateY(-3px); /* Float up */
+}
+
+.skills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  /* The Category Headings (Languages, Tools, etc.) */
+  .skill-category h4 {
+    font-size: 1.1rem;
+    color: #334155; /* Dark Slate Gray */
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* The Flex wrapper to hold the pills */
+  .pill-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px; /* Space between pills */
+  }
+
+  /* The Pill Design */
+  .skill-pill {
+    background-color: #eff6ff; /* Very light blue background */
+    color: #2c5bf0; /* Your Portfolio Blue */
+    padding: 8px 16px;
+    border-radius: 50px; /* Makes it a perfect pill shape */
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid #bfdbfe; /* Subtle border definition */
+    transition: all 0.2s ease-in-out;
+    cursor: default;
+  }
+
+  /* Hover Effect (Optional - makes them pop slightly) */
+  .skill-pill:hover {
+    background-color: #2c5bf0;
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
