@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #2d3436; /* Dark Theme */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #333;
+            width: 500px;
+            max-width: 90%;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h2 { text-align: center; margin-top: 0; }
+        
+        /* The Typing Area */
+        textarea {
+            width: 100%;
+            height: 200px;
+            background-color: #222;
+            color: #dfe6e9;
+            border: 2px solid #555;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            resize: none; /* Prevents user from dragging the box size */
+            box-sizing: border-box; /* Ensures padding doesn't break width */
+            outline: none;
+        }
+        textarea:focus { border-color: #e056fd; /* Purple glow on focus */ }
+
+        /* The Stats Row */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .stat-box {
+            background-color: #444;
+            padding: 15px;
+            border-radius: 8px;
+            width: 45%;
+            text-align: center;
+        }
+        .number {
+            display: block;
+            font-size: 30px;
+            font-weight: bold;
+            color: #e056fd; /* Purple numbers */
+        }
+        .label { font-size: 14px; color: #b2bec3; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Word & Character Counter</h2>
+        
+        <textarea id="text-input" placeholder="Start typing here..."></textarea>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <span id="char-count" class="number">0</span>
+                <span class="label">Characters</span>
+            </div>
+            <div class="stat-box">
+                <span id="word-count" class="number">0</span>
+                <span class="label">Words</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Select the elements
+        const inputArea = document.getElementById('text-input');
+        const charCount = document.getElementById('char-count');
+        const wordCount = document.getElementById('word-count');
+
+        // 2. The Listener (Fires every time you type/paste/delete)
+        inputArea.addEventListener('input', function() {
+            
+            // --- CHARACTER COUNT LOGIC ---
+            // Just count the length of the string
+            const text = inputArea.value;
+            charCount.innerText = text.length;
+
+            // --- WORD COUNT LOGIC ---
+            // Step A: Remove whitespace from start/end so " " isn't counted as a word
+            const trimmedText = text.trim();
+            
+            // Step B: Check if empty (otherwise it counts 1 word for an empty string)
+            if (!trimmedText) {
+                wordCount.innerText = 0;
+            } else {
+                // Step C: Split the text by spaces (or multiple spaces)
+                // The regex /\s+/ means "one or more spaces/tabs/newlines"
+                const words = trimmedText.split(/\s+/);
+                wordCount.innerText = words.length;
+            }
+        });
+    </script>
+</body>
+</html>
