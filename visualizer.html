@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algo Visualizer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            /* Cleaner font */
+            background-color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+
+        #array-container {
+            display: flex;
+            align-items: flex-end;
+            height: 400px;
+            width: 90%;
+            /* Wider container */
+            max-width: 800px;
+            border-bottom: 5px solid #374151;
+            justify-content: center;
+            padding: 0 20px;
+        }
+
+        .bar {
+            width: 20px;
+            margin: 0 2px;
+            background-color: #3b82f6;
+            /* NO TRANSITION - It breaks the sort animation! */
+        }
+
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 12px;
+            /* Adds nice space between buttons */
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: #1f2937;
+            /* Dark slate */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #374151;
+        }
+
+        button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Sorting Visualizer</h1>
+
+    <div id="array-container">
+    </div>
+
+    <div class="controls">
+        <button onclick="generateArray()">New Array</button>
+        <button onclick="bubbleSort()">Bubble Sorting</button>
+        <button onclick="selectionSort()">Selection Sort</button>
+        <button onclick="runMergeSort()">Merge Sort</button>
+        <button onclick="runQuickSort()">Quick Sort</button>
+    </div>
+
+    <script>
+        // --- 1. SETUP & HELPERS ---
+        const container = document.getElementById("array-container");
+        const delay = 30; // Speed (Lower = Faster)
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function disableButtons(disable = true) {
+            const buttons = document.querySelectorAll("button");
+            buttons.forEach(btn => btn.disabled = disable);
+        }
+
+        function generateArray() {
+            container.innerHTML = "";
+            for (let i = 0; i < 30; i++) {
+                let value = Math.floor(Math.random() * 300) + 20;
+                let bar = document.createElement("div");
+                bar.classList.add("bar");
+                bar.style.height = `${value}px`;
+                container.appendChild(bar);
+            }
+            disableButtons(false);
+        }
+
+        // --- 2. BUBBLE SORT ---
+        async function bubbleSort() {
+            disableButtons(true);
+            let bars = document.querySelectorAll(".bar");
+
+            for (let i = 0; i < bars.length - 1; i++) {
+                for (let j = 0; j < bars.length - i - 1; j++) {
+                    bars[j].style.backgroundColor = "red";
+                    bars[j + 1].style.backgroundColor = "red";
+                    await sleep(delay);
+
+                    let val1 = parseInt(bars[j].style.height);
+                    let val2 = parseInt(bars[j + 1].style.height);
+
+                    if (val1 > val2) {
+                        bars[j].style.height = `${val2}px`;
+                        bars[j + 1].style.height = `${val1}px`;
+                    }
+                    bars[j].style.backgroundColor = "#3b82f6";
+                    bars[j + 1].style.backgroundColor = "#3b82f6";
+                }
+                bars[bars.length - i - 1].style.backgroundColor = "green";
+            }
+            bars[0].style.backgroundColor = "green";
+            disableButtons(false);
+        }
+
+        // --- 3. SELECTION SORT ---
+        async function selectionSort() {
+            disableButtons(true);
+            let bars = document.querySelectorAll(".bar");
+
+            for (let i = 0; i < bars.length; i++) {
+                let minIndex = i;
+                bars[i].style.backgroundColor = "darkblue";
+
+                for (let j = i + 1; j < bars.length; j++) {
+                    bars[j].style.backgroundColor = "red";
+                    await sleep(delay / 2);
+
+                    let val1 = parseInt(bars[j].style.height);
+                    let val2 = parseInt(bars[minIndex].style.height);
+
+                    if (val1 < val2) {
+                        if (minIndex !== i) bars[minIndex].style.backgroundColor = "#3b82f6";
+                        minIndex = j;
+                        bars[minIndex].style.backgroundColor = "orange";
+                    } else {
+                        bars[j].style.backgroundColor = "#3b82f6";
+                    }
+                }
+                await sleep(delay);
+
+                let tempHeight = bars[i].style.height;
+                bars[i].style.height = bars[minIndex].style.height;
+                bars[minIndex].style.height = tempHeight;
+
+                bars[i].style.backgroundColor = "green";
+                if (minIndex !== i) bars[minIndex].style.backgroundColor = "#3b82f6";
+            }
+            disableButtons(false);
+        }
+
+        // --- 4. MERGE SORT ---
+        async function runMergeSort() {
+            disableButtons(true);
+            let bars = document.querySelectorAll(".bar");
+            await mergeSort(bars, 0, bars.length - 1);
+            disableButtons(false);
+        }
+
+        async function mergeSort(bars, start, end) {
+            if (start >= end) return;
+            const mid = Math.floor((start + end) / 2);
+            await mergeSort(bars, start, mid);
+            await mergeSort(bars, mid + 1, end);
+            await merge(bars, start, mid, end);
+        }
+
+        async function merge(bars, start, mid, end) {
+            let temp = [];
+            let i = start;
+            let j = mid + 1;
+
+            for (let k = start; k <= end; k++) bars[k].style.backgroundColor = "purple";
+            await sleep(delay);
+
+            while (i <= mid && j <= end) {
+                bars[i].style.backgroundColor = "red";
+                bars[j].style.backgroundColor = "red";
+                await sleep(delay);
+
+                let val1 = parseInt(bars[i].style.height);
+                let val2 = parseInt(bars[j].style.height);
+
+                if (val1 < val2) {
+                    temp.push(val1);
+                    i++;
+                } else {
+                    temp.push(val2);
+                    j++;
+                }
+            }
+            while (i <= mid) {
+                temp.push(parseInt(bars[i].style.height));
+                i++;
+            }
+            while (j <= end) {
+                temp.push(parseInt(bars[j].style.height));
+                j++;
+            }
+
+            for (let k = 0; k < temp.length; k++) {
+                bars[start + k].style.height = `${temp[k]}px`;
+                bars[start + k].style.backgroundColor = "lightgreen";
+                await sleep(delay);
+            }
+            for (let k = start; k <= end; k++) bars[k].style.backgroundColor = "#3b82f6";
+        }
+
+        // --- 5. QUICK SORT (Crash-Safe Version) ---
+        async function runQuickSort() {
+            disableButtons(true);
+            try {
+                let bars = document.querySelectorAll(".bar");
+                if (bars.length > 0) {
+                    // Run the recursive sort
+                    await quickSort(bars, 0, bars.length - 1);
+
+                    // --- THE FIX: Victory Lap ---
+                    // Turn everything green at the end to confirm it's done
+                    for (let i = 0; i < bars.length; i++) {
+                        bars[i].style.backgroundColor = "green";
+                        await sleep(10); // Fast ripple effect
+                    }
+                }
+            } catch (error) {
+                console.error("Sort crashed:", error);
+            } finally {
+                disableButtons(false);
+            }
+        }
+        async function quickSort(bars, low, high) {
+            if (low < high) {
+                let pivotIndex = await partition(bars, low, high);
+                await quickSort(bars, low, pivotIndex - 1);
+                await quickSort(bars, pivotIndex + 1, high);
+            }
+        }
+
+        async function partition(bars, low, high) {
+            let pivotValue = parseInt(bars[high].style.height);
+            bars[high].style.backgroundColor = "yellow";
+
+            let i = low - 1;
+
+            for (let j = low; j < high; j++) {
+                bars[j].style.backgroundColor = "red";
+                await sleep(delay);
+
+                let currentValue = parseInt(bars[j].style.height);
+
+                if (currentValue < pivotValue) {
+                    i++;
+                    let temp = bars[i].style.height;
+                    bars[i].style.height = bars[j].style.height;
+                    bars[j].style.height = temp;
+
+                    bars[i].style.backgroundColor = "orange";
+                    if (i !== j) bars[j].style.backgroundColor = "orange";
+                    await sleep(delay);
+                }
+
+                bars[j].style.backgroundColor = "#3b82f6";
+                if (i >= low) bars[i].style.backgroundColor = "#3b82f6";
+            }
+
+            let temp = bars[i + 1].style.height;
+            bars[i + 1].style.height = bars[high].style.height;
+            bars[high].style.height = temp;
+
+            bars[high].style.backgroundColor = "#3b82f6";
+            bars[i + 1].style.backgroundColor = "green";
+
+            await sleep(delay);
+            return i + 1;
+        }
+
+        // Initialize
+        generateArray();
+    </script>
+</body>
+
+</html>
