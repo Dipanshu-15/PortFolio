@@ -10,14 +10,34 @@
         My Personnal Portfolio
     </title>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C3G5XJ21L2"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+        // 1. DEFINITION: What counts as "Admin"?
+        // If we are on Localhost OR if URL has '?mode=admin'
+        const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+        const isAdmin = window.location.search.includes('mode=admin');
 
-        // ⚠️ IMPORTANT: Replace 'G-YOUR_ID_HERE' with your actual ID ⚠️
-        gtag('config', 'G-C3G5XJ21L2');
+        // 2. LOGIC: Only run Google Analytics if we are NOT Admin
+        if (!isLocal && !isAdmin) {
+
+            // Dynamically inject the Google Script
+            var script = document.createElement('script');
+            script.async = true;
+            // ⚠️ REPLACE 'G-XXXXXXXXXX' BELOW WITH YOUR ACTUAL ID ⚠️
+            script.src = "https://www.googletagmanager.com/gtag/js?id=G-G-C3G5XJ21L2";
+            document.head.appendChild(script);
+
+            // Initialize Google Analytics
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            // ⚠️ REPLACE 'G-XXXXXXXXXX' BELOW WITH YOUR ACTUAL ID ⚠️
+            gtag('config', 'G-G-C3G5XJ21L2');
+
+            console.log("Analytics: Tracking Enabled");
+        } else {
+            console.log("Analytics: Admin/Localhost detected - Tracking Disabled");
+        }
     </script>
 </head>
 
