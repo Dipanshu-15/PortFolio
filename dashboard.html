@@ -1,42 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C3G5XJ21L2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        // ⚠️ IMPORTANT: Replace 'G-YOUR_ID_HERE' with your actual ID ⚠️
+        gtag('config', 'G-C3G5XJ21L2');
+    </script>
     <title>Live Market Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <style>
-        body { 
-            background-color: #0f172a; /* Dark Slate */
-            color: #e2e8f0; 
+        body {
+            background-color: #0f172a;
+            /* Dark Slate */
+            color: #e2e8f0;
             font-family: 'Segoe UI', sans-serif;
         }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
         /* Card Hover Effect */
-        .card { 
+        .card {
             transition: all 0.2s ease;
             border: 1px solid #1e293b;
         }
-        .card:hover { 
-            transform: translateY(-4px); 
+
+        .card:hover {
+            transform: translateY(-4px);
             border-color: #3b82f6;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
+
 <body class="p-6 md:p-12 min-h-screen">
 
     <div class="max-w-5xl mx-auto mb-12 flex justify-between items-end border-b border-slate-700 pb-6">
         <div>
-            <h1 class="text-3xl font-bold text-white tracking-tight">Market<span class="text-blue-500">_Terminal</span></h1>
+            <h1 class="text-3xl font-bold text-white tracking-tight">Market<span class="text-blue-500">_Terminal</span>
+            </h1>
             <p class="text-slate-400 text-sm mt-1">Live Feed • CoinGecko API v3</p>
         </div>
         <div class="flex gap-4">
             <a href="index.html" class="text-slate-400 hover:text-white text-sm py-2">← Back to Portfolio</a>
-            <button onclick="fetchPrices()" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-2 rounded transition-colors shadow-lg shadow-blue-900/20">
+            <button onclick="fetchPrices()"
+                class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-2 rounded transition-colors shadow-lg shadow-blue-900/20">
                 REFRESH DATA
             </button>
         </div>
@@ -47,12 +65,12 @@
     </div>
 
     <div id="card-container" class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        </div>
+    </div>
 
     <script>
         const container = document.getElementById("card-container");
         const status = document.getElementById("status-bar");
-        
+
         // The API Endpoint (Top 6 coins, USD)
         const API_URL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=6&page=1&sparkline=false";
 
@@ -61,18 +79,18 @@
                 // 1. Loading State
                 status.innerText = "STATUS: FETCHING DATA...";
                 status.classList.add("animate-pulse", "text-blue-400");
-                
+
                 // 2. Fetch Data
                 const response = await fetch(API_URL);
-                
+
                 // 3. Handle Errors (e.g., API Limit)
                 if (!response.ok) throw new Error("API Limit Reached or Network Error");
 
                 const data = await response.json();
-                
+
                 // 4. Render
                 renderCards(data);
-                
+
                 // 5. Success State
                 status.innerText = `STATUS: DATA UPDATED AT ${new Date().toLocaleTimeString()}`;
                 status.classList.remove("animate-pulse", "text-blue-400");
@@ -87,7 +105,7 @@
 
         function renderCards(coins) {
             container.innerHTML = ""; // Clear old data
-            
+
             coins.forEach(coin => {
                 // Determine color for price change (Green for up, Red for down)
                 const isPositive = coin.price_change_percentage_24h >= 0;
@@ -122,7 +140,7 @@
                         </div>
                     </div>
                 `;
-                
+
                 // Inject into container
                 container.innerHTML += card;
             });
@@ -132,4 +150,5 @@
         fetchPrices();
     </script>
 </body>
+
 </html>
