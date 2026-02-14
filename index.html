@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -7,38 +7,10 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>
-        My Personnal Portfolio
+        My Personal Portfolio
     </title>
 
-    <script>
-        // 1. DEFINITION: What counts as "Admin"?
-        // If we are on Localhost OR if URL has '?mode=admin'
-        const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-        const isAdmin = window.location.search.includes('mode=admin');
-
-        // 2. LOGIC: Only run Google Analytics if we are NOT Admin
-        if (!isLocal && !isAdmin) {
-
-            // Dynamically inject the Google Script
-            var script = document.createElement('script');
-            script.async = true;
-            // ⚠️ REPLACE 'G-XXXXXXXXXX' BELOW WITH YOUR ACTUAL ID ⚠️
-            script.src = "https://www.googletagmanager.com/gtag/js?id=G-G-C3G5XJ21L2";
-            document.head.appendChild(script);
-
-            // Initialize Google Analytics
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-
-            // ⚠️ REPLACE 'G-XXXXXXXXXX' BELOW WITH YOUR ACTUAL ID ⚠️
-            gtag('config', 'G-G-C3G5XJ21L2');
-
-            console.log("Analytics: Tracking Enabled");
-        } else {
-            console.log("Analytics: Admin/Localhost detected - Tracking Disabled");
-        }
-    </script>
+    
 </head>
 
 <body>
@@ -86,12 +58,14 @@
             </section>
 
             <section id="hobbies">
+                <h3>02. Skills</h3>
                 <div class="skills-container">
 
                     <div class="skill-category">
                         <h4>Languages</h4>
                         <div class="pill-wrapper">
                             <span class="skill-pill">C++</span>
+                            <span class="skill-pill">Java</span>
                             <span class="skill-pill">Python</span>
                             <span class="skill-pill">SQL</span>
                             <span class="skill-pill">JavaScript</span>
@@ -157,10 +131,10 @@
 
                 <a href="mailto:dipanshuaggarwal999@gmail.com" class="email-btn">Say Hello</a>
                 <div class="social-links-center">
-                    <a href="https://github.com/Dipanshu-15" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/dipanshu-a38496332" target="_blank"><i
+                    <a href="https://github.com/Dipanshu-15" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/dipanshu-a38496332" target="_blank" rel="noopener noreferrer"><i
                             class="fab fa-linkedin"></i></a>
-                    <a href="https://instagram.com/_dipanshu_a" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://instagram.com/_dipanshu_a" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
                 </div>
             </section>
 
