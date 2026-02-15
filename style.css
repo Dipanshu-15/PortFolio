@@ -333,3 +333,231 @@ p {
     color: #ffffff;
     transform: translateY(-2px);
   }
+
+  /* =========================================
+   MOBILE RESPONSIVENESS PATCH
+   (Applies to tablets and mobile phones)
+   ========================================= */
+@media screen and (max-width: 1023px) {
+
+  /* 1. CONTAINER: Add breathing room on sides */
+  .screen-split {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 20px; /* Adds standard mobile padding */
+  }
+
+  /* 2. HEADER (Left Side): Transform sidebar into a centered Hero Section */
+  .left-side {
+    position: relative; /* Disable sticky for mobile */
+    width: 100%;
+    height: auto;
+    padding: 0 0 40px 0; /* Only bottom padding */
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0; /* Visual divider line */
+    margin-bottom: 40px;
+  }
+
+  /* 3. NAVIGATION: Center links and make them touch-friendly */
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+  }
+
+  /* Turn nav links into small 'pills' for easier tapping */
+  .nav-links a {
+    background-color: #f1f5f9;
+    padding: 8px 16px;
+    border-radius: 20px;
+    margin-bottom: 0;
+  }
+
+  /* 4. TYPOGRAPHY: Scale down for small screens */
+  h1 { font-size: 36px; line-height: 1.2; }
+  h2 { font-size: 18px; }
+  .tagline { margin: 0 auto 30px auto; font-size: 15px; }
+
+  /* 5. CONTENT (Right Side): Reset spacing */
+  .right-side {
+    padding: 0;
+  }
+  
+  /* 6. BUTTONS: Full width for better mobile UX */
+  .project-card a, 
+  .email-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* 7. PROJECT CARDS: Ensure they don't overflow */
+  .project-card {
+    padding: 20px;
+  }
+}
+
+/* =========================================
+   DARK MODE THEME
+   (Applies when body has class "dark-theme")
+   ========================================= */
+
+/* 1. The Button Styling */
+.theme-toggle {
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    margin-bottom: 20px; /* Space between tagline and nav */
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: #e2e8f0;
+}
+
+/* 2. Global Dark Colors */
+body.dark-theme {
+    background-color: #0f172a; /* Deep Navy Background */
+    color: #94a3b8;            /* Soft Grey Text */
+}
+
+/* 3. Text & Headings Override */
+body.dark-theme h1, 
+body.dark-theme h2, 
+body.dark-theme h3, 
+body.dark-theme h4,
+body.dark-theme strong,
+body.dark-theme .nav-links a:hover {
+    color: #f1f5f9; /* Bright White-Grey */
+}
+
+/* 4. Project Cards in Dark Mode */
+body.dark-theme .project-card:hover {
+    background-color: #1e293b; /* Slightly lighter navy */
+    border-color: #334155;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* 5. Pills & Buttons in Dark Mode */
+body.dark-theme .skill-pill,
+body.dark-theme .nav-links a {
+    background-color: #1e293b;
+    color: #cbd5e1;
+    border-color: #334155;
+}
+
+body.dark-theme .project-card a {
+    background-color: transparent;
+    border-color: #60a5fa; /* Lighter Blue */
+    color: #60a5fa;
+}
+
+body.dark-theme .project-card a:hover {
+    background-color: #60a5fa;
+    color: #0f172a;
+}
+
+/* 1. REMOVE THE NAV BOX */
+/* This forces the container around the links to be invisible */
+.nav-links {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* 2. POSITION THE THEME BUTTON */
+/* This replaces any previous .theme-toggle styles */
+.theme-toggle {
+    position: fixed; /* Sticks it to the screen */
+    top: 20px;       /* Distance from top */
+    right: 20px;     /* Distance from right */
+    z-index: 999;    /* Ensures it's always on top */
+
+    /* Styling to make it look clean */
+    background-color: transparent;
+    border: 1px solid #cbd5e1;
+    color: inherit; /* Takes text color from the theme */
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+/* Subtle hover effect for the button */
+.theme-toggle:hover {
+    background-color: rgba(150, 150, 150, 0.1);
+}
+
+/* 1. REMOVE THE BOXES FROM LINKS */
+/* This forces the links to be just text, no background color */
+body.dark-theme .nav-links a,
+.nav-links a {
+    background-color: transparent !important; /* Gone! */
+    border: none !important;
+    padding-left: 0 !important; /* Clean alignment */
+    color: #94a3b8; /* Reset text color */
+}
+
+/* 2. HOVER EFFECT (Text only) */
+body.dark-theme .nav-links a:hover,
+.nav-links a:hover {
+    color: #fff !important; /* White text on hover */
+    background-color: transparent !important;
+    padding-left: 10px !important; /* Slide effect */
+}
+
+/* 3. FIX THE BUTTON LOCATION & LOOK */
+/* Forces the button to the absolute top-right corner */
+#toggle-btn {
+    position: fixed !important; /* Sticks to the window */
+    top: 25px !important;
+    right: 25px !important;
+    left: auto !important;      /* Unsticks from left */
+    z-index: 10000;             /* Sits on top of everything */
+    
+    /* Make it look cleaner (Minimalist) */
+    background: transparent !important;
+    border: 1px solid #475569 !important;
+    color: inherit !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+}
+
+/* Button Hover */
+#toggle-btn:hover {
+    border-color: #2563eb !important;
+    color: #2563eb !important;
+}
+
+/* =========================================
+   FOOTER VISIBILITY FIX (Add to bottom)
+   ========================================= */
+
+/* 1. Make the text visible in Dark Mode */
+body.dark-theme .scrolling-footer p,
+body.dark-theme footer p {
+    color: #94a3b8 !important; /* Light Grey (Readable) */
+    opacity: 0.8;
+}
+
+/* 2. Add breathing room at the bottom */
+.scrolling-footer {
+    padding-bottom: 40px !important; /* Space away from bottom edge */
+    padding-top: 20px !important;    /* Space away from content */
+    margin-top: 0 !important;
+}
+
+/* 3. Ensure the font is readable on mobile */
+.scrolling-footer p {
+    font-size: 13px !important;
+    letter-spacing: 0.5px;
+}
