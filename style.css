@@ -515,21 +515,36 @@ body.dark-theme .nav-links a:hover,
     padding-left: 10px !important; /* Slide effect */
 }
 
-/* 3. FIX THE BUTTON LOCATION & LOOK */
-/* Forces the button to the absolute top-right corner */
+/* =========================================
+   BUTTON FIX: SCROLLS WITH PAGE
+   ========================================= */
 #toggle-btn {
-    position: fixed !important; /* Sticks to the window */
-    top: 25px !important;
-    right: 25px !important;
-    left: auto !important;      /* Unsticks from left */
-    z-index: 10000;             /* Sits on top of everything */
+    position: absolute !important; /* Changed from fixed to absolute */
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 10000;
     
-    /* Make it look cleaner (Minimalist) */
-    background: transparent !important;
-    border: 1px solid #475569 !important;
-    color: inherit !important;
+    /* Ensure it has a background so lines don't show through */
+    background-color: #f8fafc; /* Matches your light theme bg */
+    border: 1px solid #cbd5e1 !important;
+    color: #475569 !important;
     padding: 8px 12px !important;
     border-radius: 8px !important;
+    cursor: pointer;
+}
+
+/* Dark mode version of the button */
+body.dark-theme #toggle-btn {
+    background-color: #0f172a; /* Matches your dark theme bg */
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+
+/* Add space to the top of the page so the button doesn't cover your name */
+@media screen and (max-width: 1023px) {
+    .screen-split {
+        padding-top: 70px !important; /* Pushes "Dipanshu" down */
+    }
 }
 
 /* Button Hover */
@@ -560,4 +575,74 @@ body.dark-theme footer p {
 .scrolling-footer p {
     font-size: 13px !important;
     letter-spacing: 0.5px;
+}
+
+/* =========================================
+   MENU CENTERING FIX (Mobile Only)
+   ========================================= */
+@media screen and (max-width: 1023px) {
+    
+    /* 1. Force the container to center everything */
+    .nav-links {
+        display: flex !important;
+        justify-content: center !important; /* Center horizontally */
+        flex-wrap: wrap !important;         /* Allow wrapping */
+        gap: 15px !important;
+        width: 100% !important;
+    }
+
+    /* 2. Force the links to be centered pills */
+    .nav-links a {
+        display: inline-flex !important;    /* Shrink to fit text */
+        justify-content: center !important; /* Center text inside the pill */
+        text-align: center !important;
+        width: auto !important;             /* Stop them from stretching */
+        margin: 0 !important;
+    }
+    
+    /* Optional: Add a little bottom margin to the whole header */
+    .left-side {
+        padding-bottom: 20px !important;
+    }
+}
+
+/* =========================================
+   FINAL MENU FIX: PURE TEXT (No Boxes, No Lines)
+   ========================================= */
+@media screen and (max-width: 1023px) {
+    
+    /* 1. REMOVE THE LINE (Confirming it stays gone) */
+    .nav-links a::before,
+    .nav-links a:hover::before {
+        content: none !important;
+        display: none !important;
+    }
+
+    /* 2. REMOVE THE GREY BOX BACKGROUND */
+    /* Applies to all states: normal, hover, active, focus */
+    .nav-links a,
+    .nav-links a:hover,
+    .nav-links a:active,
+    .nav-links a:focus,
+    body.dark-theme .nav-links a:hover {
+        background-color: transparent !important; /* No background ever */
+        border: none !important;
+        box-shadow: none !important;
+        transform: none !important; /* Stop movement */
+        padding: 8px 12px !important; /* Keep spacing consistent */
+        margin: 0 !important;
+    }
+
+    /* 3. VISUAL FEEDBACK: Change TEXT color only */
+    /* Light Mode: Turn Blue on touch */
+    .nav-links a:active,
+    .nav-links a:hover {
+        color: #2563eb !important; 
+    }
+
+    /* Dark Mode: Turn White on touch */
+    body.dark-theme .nav-links a:active,
+    body.dark-theme .nav-links a:hover {
+        color: #ffffff !important;
+    }
 }
